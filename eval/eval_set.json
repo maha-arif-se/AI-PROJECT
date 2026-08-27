@@ -1,0 +1,63 @@
+
+[
+  {
+    "question": "What is RPC?",
+    "expected_answer": "A mechanism where a client makes what looks like a local procedure call, but it's actually executed on a remote machine, with parameters and results passed across the network."
+  },
+  {
+    "question": "What are stub procedures in RPC?",
+    "expected_answer": "Client-side and server-side helper procedures that handle the details of remote communication so the programmer doesn't have to."
+  },
+  {
+    "question": "What is marshalling in RPC?",
+    "expected_answer": "The process of converting data into a standard format so it can be sent correctly between machines that may represent data differently."
+  },
+  {
+    "question": "Name two problems RPC faces due to procedures residing in different address spaces.",
+    "expected_answer": "Pointers can't be passed between caller and callee, and machines can crash mid-call, leaving the caller unsure if the procedure executed."
+  },
+  {
+    "question": "What is gRPC?",
+    "expected_answer": "An open-source RPC framework by Google that uses HTTP/2 and Protocol Buffers, known for high performance and bi-directional streaming."
+  },
+  {
+    "question": "What is Lamport's happens-before relation?",
+    "expected_answer": "A relation (a->b) meaning event a occurs before event b, either because they're in the same process in that order, or because a is a message send and b is its receipt."
+  },
+  {
+    "question": "How does a process update its Lamport clock when sending a message?",
+    "expected_answer": "It increments its own counter before sending, and attaches that value as the message's timestamp."
+  },
+  {
+    "question": "How does a process update its Lamport clock when receiving a message?",
+    "expected_answer": "It sets its counter to the max of its current value and the received message's timestamp, then proceeds."
+  },
+  {
+    "question": "What is a vector clock, and who proposed it?",
+    "expected_answer": "A system where each process keeps an integer vector tracking its best guess of every process's logical time; proposed independently by Fidge and Mattern."
+  },
+  {
+    "question": "What is a distributed system?",
+    "expected_answer": "A collection of autonomous computing elements that appears to its users as a single coherent system."
+  },
+  {
+    "question": "What are the four design goals of a distributed system?",
+    "expected_answer": "Supporting resource sharing, distribution transparency, openness, and scalability."
+  },
+  {
+    "question": "What is distribution transparency?",
+    "expected_answer": "Hiding the fact that a system's processes and resources are physically spread across multiple computers."
+  },
+  {
+    "question": "Name the three scalability techniques mentioned.",
+    "expected_answer": "Hiding communication latencies, distribution of work, and replication."
+  },
+  {
+    "question": "What is the capital of France?",
+    "expected_answer": "NOT_IN_DOCUMENTS"
+  },
+  {
+    "question": "How do you train a neural network?",
+    "expected_answer": "NOT_IN_DOCUMENTS"
+  }
+]
