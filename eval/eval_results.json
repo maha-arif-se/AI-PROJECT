@@ -1,96 +1,96 @@
 {
   "summary": {
     "total_questions": 15,
-    "average_score": 8.67,
-    "average_latency_seconds": 11.83,
-    "min_latency_seconds": 0.02,
-    "max_latency_seconds": 23.04,
+    "average_score": 9.0,
+    "average_latency_seconds": 15.01,
+    "min_latency_seconds": 0.05,
+    "max_latency_seconds": 22.4,
     "approx_total_tokens": 24000,
     "approx_cost_usd": 0.0,
-    "failure_count": 3
+    "failure_count": 2
   },
   "results": [
     {
       "question": "What is RPC?",
       "expected_answer": "A mechanism where a client makes what looks like a local procedure call, but it's actually executed on a remote machine, with parameters and results passed across the network.",
-      "actual_answer": "RPC (Remote Procedure Call) is a communication mechanism that lets a program invoke a procedure on a remote machine as if it were a local call. When a client calls a remote procedure, the calling process is suspended, the arguments are sent to the server, the server executes the procedure, and the result is returned to the client, after which the client resumes execution as if the call had been local. RPC uses client\u2011side and server\u2011side stubs to manage the details of the network communication, and it cannot pass pointers or share the caller\u2019s environment.  \n\nSources:  \n- [source: 5-RPC.pdf, chunk 2]  \n- [source: 5-RPC.pdf, chunk 7]  \n- [source: 5-RPC.pdf, chunk 8]",
+      "actual_answer": "RPC (Remote Procedure Call) is a mechanism that lets a client program invoke a procedure on a remote server as if it were a local call.  \nWhen a client calls a remote procedure, the client\u2019s execution is suspended while the procedure runs on the server. Parameters are sent to the server, the procedure executes, and the result is returned to the client, after which the client resumes execution as if the call had been local.  \n\n[Source: 5\u2011RPC.pdf, chunk 2]  \n[Source: 5\u2011RPC.pdf, chunk 7]",
       "sources": [
         "5-RPC.pdf"
       ],
       "score": 10,
-      "latency_seconds": 7.23
+      "latency_seconds": 15.94
     },
     {
       "question": "What are stub procedures in RPC?",
       "expected_answer": "Client-side and server-side helper procedures that handle the details of remote communication so the programmer doesn't have to.",
-      "actual_answer": "Stub procedures are local \u201cproxy\u201d routines that hide the details of remote communication.  \n* The client\u2011side stub is called by the program as if it were the real procedure; it marshals the arguments, sends a message to the server, and waits for the reply.  \n* The server\u2011side stub receives the message, unmarshals the data, invokes the actual remote procedure, and then returns the result back to the client stub.  \n\nThese stubs are responsible for all communication, marshalling, and error handling between client and server, and can be generated at compile time or linked at run time.  \n\nSources: [source: 5\u2011RPC.pdf, chunk\u202f2], [source: 5\u2011RPC.pdf, chunk\u202f3], [source: 5\u2011RPC.pdf, chunk\u202f7]",
+      "actual_answer": "Stub procedures are local \u201cdummy\u201d procedures that stand in for the real remote routine.  \n* The client\u2011side stub receives the call from the program, marshals the arguments into a message, sends it to the server, and waits for the reply.  \n* The server\u2011side stub receives the message, unmarshals the data, invokes the actual remote procedure, marshals the result, and returns it to the client stub.  \n\nThus stubs hide all the communication details (message construction, network transfer, error handling) from the application code.  \n[Source: 5\u2011RPC.pdf, chunk\u202f2]  \n[Source: 5\u2011RPC.pdf, chunk\u202f3]",
       "sources": [
         "5-RPC.pdf"
       ],
       "score": 10,
-      "latency_seconds": 11.37
+      "latency_seconds": 13.85
     },
     {
       "question": "What is marshalling in RPC?",
       "expected_answer": "The process of converting data into a standard format so it can be sent correctly between machines that may represent data differently.",
-      "actual_answer": "Marshalling is the process of converting the parameters and results of",
+      "actual_answer": "Marshalling in RPC is the process of converting the arguments and return values of a procedure call into a canonical, machine\u2011independent format that can be transmitted over the network, and then reconstructing them on the remote side. It handles differences in character sets, integer and floating\u2011point representations, and ensures that pointer\u2011based data structures are encoded so that the client\u2011side pointers are not needed on the server.  \n\n[source: 5\u2011RPC.pdf, chunk 5]  \n[source: 5\u2011RPC.pdf, chunk 6]",
       "sources": [
         "5-RPC.pdf"
       ],
-      "score": 5,
-      "latency_seconds": 4.5
+      "score": 10,
+      "latency_seconds": 17.29
     },
     {
       "question": "Name two problems RPC faces due to procedures residing in different address spaces.",
       "expected_answer": "Pointers can't be passed between caller and callee, and machines can crash mid-call, leaving the caller unsure if the procedure executed.",
-      "actual_answer": "Two problems that arise when remote procedures live in different address spaces are:\n\n1. **Pointers cannot be passed** \u2013 a pointer that is valid in the caller\u2019s address space is meaningless in the callee\u2019s address space.  \n2. **Parameters and results must be transmitted over the network** \u2013 because they cannot be shared directly, they must be marshalled, sent, and unmarshalled between the client and server.  \n\n[source: 5\u2011RPC.pdf, chunk 6]",
+      "actual_answer": "Two problems that arise when remote procedures live in different address spaces are:\n\n1. **Pointers cannot be passed** \u2013 a pointer that is valid in the caller\u2019s address space is meaningless in the callee\u2019s space.  \n2. **Parameters and results must be transmitted over the network** \u2013 because the two processes cannot share memory, all arguments and return values have to be marshalled and sent across the network.\n\n[source: 5\u2011RPC.pdf, chunk\u202f6]",
       "sources": [
         "5-RPC.pdf"
       ],
       "score": 5,
-      "latency_seconds": 0.87
+      "latency_seconds": 18.97
     },
     {
       "question": "What is gRPC?",
       "expected_answer": "An open-source RPC framework by Google that uses HTTP/2 and Protocol Buffers, known for high performance and bi-directional streaming.",
-      "actual_answer": "gRPC is an open\u2011source remote\u2011procedure\u2011call framework developed by Google. It uses HTTP/2 as its transport protocol and Protocol Buffers for data serialization. The framework offers high performance, bi\u2011directional streaming, strong typing, and support for multiple programming languages, making it well suited for microservices communication, real\u2011time applications, and low\u2011latency use cases.  \n\n[source: 5\u2011RPC.pdf, chunk 9]",
+      "actual_answer": "gRPC is an open\u2011source remote\u2011procedure\u2011call framework created by Google. It uses HTTP/2 as its transport protocol and Protocol Buffers for message serialization. The framework is designed for high performance, supports bi\u2011directional streaming, provides strong typing through Protocol Buffers, and can be used from multiple programming languages. Typical use cases include microservices communication, real\u2011time communication, and low\u2011latency applications.  \n\n[source: 5\u2011RPC.pdf, chunk 9]",
       "sources": [
         "5-RPC.pdf"
       ],
       "score": 10,
-      "latency_seconds": 11.16
+      "latency_seconds": 16.24
     },
     {
       "question": "What is Lamport's happens-before relation?",
       "expected_answer": "A relation (a->b) meaning event a occurs before event b, either because they're in the same process in that order, or because a is a message send and b is its receipt.",
-      "actual_answer": "Lamport\u2019s **happens\u2011before** relation is a partial order on events in a distributed system.  \nIt is denoted \\(a \\rightarrow b\\) and means that **all processes agree that event \\(a\\) occurs before event \\(b\\)**.  \nThe relation holds in two situations:\n\n1. When \\(a\\) and \\(b\\) are events in the same process and \\(a\\) occurs before \\(b\\).  \n2. When \\(a\\) is the sending of a message by one process and \\(b\\) is the receiving of that same message by another process.  \n\nA message cannot be received before it is sent, nor at the same instant; it takes a finite, non\u2011zero time to arrive.  \n\n[source: 6-Coordination Algorithm.pdf, chunk 1]",
+      "actual_answer": "Lamport\u2019s **happens\u2011before relation** (denoted \\(a \\rightarrow b\\)) is a partial order on events in a distributed system that captures the causal ordering agreed upon by all processes.  \nIt holds when either  \n\n1. \\(a\\) and \\(b\\) are events in the same process and \\(a\\) occurs before \\(b\\); or  \n2. \\(a\\) is the event of sending a message and \\(b\\) is the event of receiving that same message in another process.  \n\nA message cannot be received before it is sent, or at the same instant; it requires a finite, non\u2011zero time to arrive.  \n\n[source: 6-Coordination Algorithm.pdf, chunk 1]",
       "sources": [
         "6-Coordination Algorithm.pdf"
       ],
       "score": 10,
-      "latency_seconds": 10.96
+      "latency_seconds": 12.36
     },
     {
       "question": "How does a process update its Lamport clock when sending a message?",
       "expected_answer": "It increments its own counter before sending, and attaches that value as the message's timestamp.",
-      "actual_answer": "When a process \\(P_i\\) sends a message, it first increments its own Lamport counter and then uses that value as the timestamp for the message:\n\n1. **Increment the counter** \u2013 \\(C_i \\leftarrow C_i + 1\\).  \n2. **Attach the timestamp** \u2013 set the message\u2019s timestamp \\(ts(m)\\) to the updated counter value \\(C_i\\).\n\nThis ensures the sending event is recorded before the message is transmitted.  \n\n**Sources**  \n- [source: 6-Coordination Algorithm.pdf, chunk 1]  \n- [source: 6-Coordination Algorithm.pdf, chunk 2]",
+      "actual_answer": "When a process \\(P_i\\) sends a message, it first increments its own Lamport counter and then attaches that value as the message\u2019s timestamp:\n\n1. **Increment** its local counter: \\(C_i \\leftarrow C_i + 1\\).  \n2. **Set** the message\u2019s timestamp to the new counter value: \\(ts(m) \\leftarrow C_i\\).\n\nThis timestamp is then sent along with the message to the receiving process.  \n\n**Sources**  \n- [source: 6-Coordination Algorithm.pdf, chunk 1]  \n- [source: 6-Coordination Algorithm.pdf, chunk 2]",
       "sources": [
         "5-RPC.pdf",
         "6-Coordination Algorithm.pdf"
       ],
       "score": 10,
-      "latency_seconds": 22.02
+      "latency_seconds": 22.4
     },
     {
       "question": "How does a process update its Lamport clock when receiving a message?",
       "expected_answer": "It sets its counter to the max of its current value and the received message's timestamp, then proceeds.",
-      "actual_answer": "When a process receives a message, it updates its Lamport clock by:\n\n1. Setting its counter to the larger of its current value and the timestamp carried in the message:  \n   \\(C_j \\leftarrow \\max\\{C_j,\\; ts(m)\\}\\).\n\n2. After this adjustment, it performs the normal \u201cfirst step\u201d of an event (incrementing the counter) and then delivers the message to the application.  \n\nThis ensures the receiving process\u2019s clock reflects any causally prior events that may have occurred at the sender.  \n\n**Sources**  \n- [source: 6-Coordination Algorithm.pdf, chunk 1]  \n- [source: 6-Coordination Algorithm.pdf, chunk 2]",
+      "actual_answer": "When a process receives a message, it updates its Lamport clock by setting its local counter to the maximum of its current value and the timestamp carried in the message:\n\n\\[\nC_j \\leftarrow \\max\\{C_j,\\; ts(m)\\}\n\\]\n\nAfter this adjustment, the process proceeds with its normal event handling (e.g., delivering the message to the application).  \n\n[source: 6-Coordination Algorithm.pdf, chunk 1]",
       "sources": [
         "5-RPC.pdf",
         "6-Coordination Algorithm.pdf"
       ],
       "score": 10,
-      "latency_seconds": 22.22
+      "latency_seconds": 21.56
     },
     {
       "question": "What is a vector clock, and who proposed it?",
@@ -100,48 +100,48 @@
         "6-Coordination Algorithm.pdf"
       ],
       "score": 0,
-      "latency_seconds": 23.04
+      "latency_seconds": 21.99
     },
     {
       "question": "What is a distributed system?",
       "expected_answer": "A collection of autonomous computing elements that appears to its users as a single coherent system.",
-      "actual_answer": "A distributed system is a collection of autonomous computing elements that appear to its users as a single coherent system.  \n\n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk\u202f0]  \n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk\u202f2]",
+      "actual_answer": "A distributed system is a **collection of autonomous computing elements that appear to its users as a single coherent system**.  \nEach node is independent, has its own notion of time, and communicates with other nodes to achieve common goals.  \n\n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 0]  \n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 2]",
       "sources": [
         "2-Type of Distributed System and Design Goals (2).pdf"
       ],
       "score": 10,
-      "latency_seconds": 16.88
+      "latency_seconds": 17.04
     },
     {
       "question": "What are the four design goals of a distributed system?",
       "expected_answer": "Supporting resource sharing, distribution transparency, openness, and scalability.",
-      "actual_answer": "The four design goals of a distributed system are:\n\n1. **Supporting resource sharing**  \n2. **Distribution transparency**  \n3. **Openness**  \n4. **Scalability**  \n\nThese goals are listed in the course material as the key objectives for building a distributed system.  \n\nSources:  \n- [source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 3]  \n- [source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 0]",
+      "actual_answer": "The four design goals of a distributed system are:\n\n1. Supporting resource sharing  \n2. Distribution transparency  \n3. Openness  \n4. Scalability  \n\n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk\u202f3]  \n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk\u202f0]",
       "sources": [
         "2-Type of Distributed System and Design Goals (2).pdf"
       ],
       "score": 10,
-      "latency_seconds": 17.03
+      "latency_seconds": 17.44
     },
     {
       "question": "What is distribution transparency?",
       "expected_answer": "Hiding the fact that a system's processes and resources are physically spread across multiple computers.",
-      "actual_answer": "Distribution transparency is the property of a distributed system that hides the fact that its processes and resources are physically spread across multiple computers. It makes the system appear as a single coherent entity, so that users and applications cannot tell on which machine a process is running or whether a task has been delegated to another node.  \n\n[Source: 2-Type of Distributed System and Design Goals (2).pdf, chunk\u202f4]  \n[Source: 2-Type of Distributed System and Design Goals (2).pdf, chunk\u202f2]",
+      "actual_answer": "Distribution transparency is the property of a distributed system that hides the fact that its processes and resources are physically spread across multiple computers. It makes the system appear as a single coherent whole, so that users cannot tell where a process is executing or whether an object has been moved, replicated, or is being shared. This includes hiding differences in data representation, access methods, location, relocation, migration, replication, concurrency, and failure/recovery details.  \n\nSources:  \n- [source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 4]  \n- [source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 2]",
       "sources": [
         "2-Type of Distributed System and Design Goals (2).pdf"
       ],
       "score": 10,
-      "latency_seconds": 14.09
+      "latency_seconds": 13.05
     },
     {
       "question": "Name the three scalability techniques mentioned.",
       "expected_answer": "Hiding communication latencies, distribution of work, and replication.",
-      "actual_answer": "The three scalability techniques mentioned are:\n\n1. Hiding communication latencies  \n2. Distribution of work  \n3. Replication  \n\n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 6]  \n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 7]",
+      "actual_answer": "The three scalability techniques mentioned are:\n\n1. Hiding communication latencies  \n2. Distribution of work  \n3. Replication  \n\n[source: 2-Type of Distributed System and Design Goals (2).pdf, chunk 6]",
       "sources": [
         "2-Type of Distributed System and Design Goals (2).pdf",
         "5-RPC.pdf"
       ],
       "score": 10,
-      "latency_seconds": 15.99
+      "latency_seconds": 16.92
     },
     {
       "question": "What is the capital of France?",
@@ -149,7 +149,7 @@
       "actual_answer": "I couldn't find any relevant information in the document set for that question. Try rephrasing, or this may be outside the scope of the loaded documents.",
       "sources": [],
       "score": 10,
-      "latency_seconds": 0.02
+      "latency_seconds": 0.08
     },
     {
       "question": "How do you train a neural network?",
@@ -157,7 +157,7 @@
       "actual_answer": "I couldn't find any relevant information in the document set for that question. Try rephrasing, or this may be outside the scope of the loaded documents.",
       "sources": [],
       "score": 10,
-      "latency_seconds": 0.02
+      "latency_seconds": 0.05
     }
   ]
 }
